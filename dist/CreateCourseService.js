@@ -4,7 +4,7 @@ var CreateCourseService = /** @class */ (function () {
     function CreateCourseService() {
     }
     CreateCourseService.prototype.execute = function (_a) {
-        var name = _a.name, duration = _a.duration, educator = _a.educator;
+        var name = _a.name, _b = _a.duration, duration = _b === void 0 ? 0 : _b, educator = _a.educator;
         console.log(name, duration, educator);
     };
     return CreateCourseService;
