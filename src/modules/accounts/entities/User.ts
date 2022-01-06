@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file */
+import { hash } from "bcryptjs";
 import { Request, Response } from "express";
 import { container, inject, injectable } from "tsyringe";
 import {
@@ -50,6 +51,7 @@ export interface ICreateUserDTO {
 
 export interface IUsersRepository {
   create(data: ICreateUserDTO): Promise<void>;
+  findByEmail(email: string): Promise<User>;
 }
 
 export class UsersRepository implements IUsersRepository {
@@ -74,6 +76,11 @@ export class UsersRepository implements IUsersRepository {
 
     await this.repository.save(user);
   }
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.repository.findOne({ email });
+    return user;
+  }
 }
 
 @injectable()
@@ -84,11 +91,19 @@ export class CreateUserUseCase {
   ) {}
 
   async execute({ name, driver_license, email, password }: ICreateUserDTO) {
+    const userAlreadyExists = await this.usersRepository.findByEmail(email);
+
+    if (userAlreadyExists) {
+      throw new Error("User Already exists.");
+    }
+
+    const passwordHash = await hash(password, 8);
+
     await this.usersRepository.create({
       name,
       driver_license,
       email,
-      password,
+      password: passwordHash,
     });
   }
 }
