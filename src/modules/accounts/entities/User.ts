@@ -20,9 +20,6 @@ export class User {
   name: string;
 
   @Column()
-  username: string;
-
-  @Column()
   email: string;
 
   @Column()
@@ -46,7 +43,6 @@ export class User {
 
 export interface ICreateUserDTO {
   name: string;
-  username: string;
   password: string;
   email: string;
   driver_license: string;
@@ -65,14 +61,12 @@ export class UsersRepository implements IUsersRepository {
 
   async create({
     name,
-    username,
     email,
     driver_license,
     password,
   }: ICreateUserDTO): Promise<void> {
     const user = this.repository.create({
       name,
-      username,
       email,
       driver_license,
       password,
@@ -89,16 +83,9 @@ export class CreateUserUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute({
-    name,
-    username,
-    driver_license,
-    email,
-    password,
-  }: ICreateUserDTO) {
+  async execute({ name, driver_license, email, password }: ICreateUserDTO) {
     await this.usersRepository.create({
       name,
-      username,
       driver_license,
       email,
       password,
@@ -108,13 +95,12 @@ export class CreateUserUseCase {
 
 export class CreateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, username, driver_license, email, password } = request.body;
+    const { name, driver_license, email, password } = request.body;
 
     const createUserUseCase = container.resolve(CreateUserUseCase);
 
     await createUserUseCase.execute({
       name,
-      username,
       driver_license,
       email,
       password,
