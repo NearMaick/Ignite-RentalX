@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { Request, Response } from "express";
+import { container, inject, injectable } from "tsyringe";
 import {
   Column,
   CreateDateColumn,
@@ -81,8 +82,12 @@ export class UsersRepository implements IUsersRepository {
   }
 }
 
+@injectable()
 export class CreateUserUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository
+  ) {}
 
   async execute({
     name,
@@ -102,12 +107,12 @@ export class CreateUserUseCase {
 }
 
 export class CreateUserController {
-  constructor(private createUserUseCase: CreateUserUseCase) {}
-
   async handle(request: Request, response: Response): Promise<Response> {
     const { name, username, driver_license, email, password } = request.body;
 
-    await this.createUserUseCase.execute({
+    const createUserUseCase = container.resolve(CreateUserUseCase);
+
+    await createUserUseCase.execute({
       name,
       username,
       driver_license,
@@ -118,11 +123,3 @@ export class CreateUserController {
     return response.status(201).send();
   }
 }
-
-export default (): CreateUserController => {
-  const usersRepository = new UsersRepository();
-  const createUserUseCase = new CreateUserUseCase(usersRepository);
-  const createUserController = new CreateUserController(createUserUseCase);
-
-  return createUserController;
-};
