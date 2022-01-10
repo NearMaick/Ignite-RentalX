@@ -1,9 +1,10 @@
-import { AppError } from "../../../../errors/AppError";
-import { Category } from "../../entities/Category";
+import { AppError } from "@errors/AppError";
+import { Category } from "@modules/cars/entities/Category";
 import {
   ICategoriesRepository,
   ICreateCategoryDTO,
-} from "../../repositories/ICategoriesRepository";
+} from "@modules/cars/repositories/ICategoriesRepository";
+
 import { CreateCategoryUseCase } from "./CreateCategoryUseCase";
 
 export class CategoriesRepositoryInMemory implements ICategoriesRepository {
