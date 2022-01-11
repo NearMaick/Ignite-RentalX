@@ -6,7 +6,6 @@
 # Cadastro de Carro
 **RF** => Requisitos Funcionais
 Deve ser possível cadastrar um novo carro;
-Deve ser possível listar todas as categorias.
 
 **RN** => Regra de Negócio
 Não deve ser possível cadastrarum carro com uma placa já existente;
