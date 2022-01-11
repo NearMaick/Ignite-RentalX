@@ -1,44 +1,9 @@
-/* eslint-disable max-classes-per-file */
-// import { inject, injectable } from "tsyringe";
-import { v4 as uuidV4 } from "uuid";
-
+import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
+import { Car } from "@modules/cars/infra/typeorm/entities/Car";
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { AppError } from "@shared/errors/AppError";
 
-export class Car {
-  id: string;
-  name: string;
-  description: string;
-  daily_rate: number;
-  available: boolean;
-  license_plate: string;
-  fine_amount: number;
-  brand: string;
-  category_id: string;
-  created_at: Date;
-
-  constructor() {
-    if (!this.id) {
-      this.id = uuidV4();
-      this.available = true;
-      this.created_at = new Date();
-    }
-  }
-}
-
-export interface ICreateCarDTO {
-  name: string;
-  description: string;
-  daily_rate: number;
-  license_plate: string;
-  fine_amount: number;
-  brand: string;
-  category_id: string;
-}
-
-export interface ICarsRepository {
-  create(data: ICreateCarDTO): Promise<Car>;
-  findByLicensePlate(license_plate: string): Promise<Car>;
-}
+import { CreateCarUseCase } from "./CreateCarUseCase";
 
 export class CarsRepositoryInMemory implements ICarsRepository {
   cars: Car[] = [];
@@ -71,44 +36,6 @@ export class CarsRepositoryInMemory implements ICarsRepository {
 
   async findByLicensePlate(license_plate: string): Promise<Car> {
     return this.cars.find((car) => car.license_plate === license_plate);
-  }
-}
-
-// @injectable()
-export class CreateCarUseCase {
-  constructor(
-    // @inject("CarsRepository")
-    private carsRepository: ICarsRepository
-  ) {}
-
-  async execute({
-    name,
-    description,
-    daily_rate,
-    license_plate,
-    fine_amount,
-    brand,
-    category_id,
-  }: ICreateCarDTO): Promise<Car> {
-    const carAlreadyExists = await this.carsRepository.findByLicensePlate(
-      license_plate
-    );
-
-    if (carAlreadyExists) {
-      throw new AppError("Car already exists");
-    }
-
-    const car = await this.carsRepository.create({
-      name,
-      description,
-      daily_rate,
-      license_plate,
-      fine_amount,
-      brand,
-      category_id,
-    });
-
-    return car;
   }
 }
 
