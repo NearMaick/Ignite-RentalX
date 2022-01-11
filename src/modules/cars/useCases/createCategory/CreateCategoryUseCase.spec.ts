@@ -1,34 +1,7 @@
-import { Category } from "@modules/cars/infra/typeorm/entities/Category";
-import {
-  ICategoriesRepository,
-  ICreateCategoryDTO,
-} from "@modules/cars/repositories/ICategoriesRepository";
+import { CategoriesRepositoryInMemory } from "@modules/cars/repositories/in-memory/CategoriesRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 
 import { CreateCategoryUseCase } from "./CreateCategoryUseCase";
-
-export class CategoriesRepositoryInMemory implements ICategoriesRepository {
-  categories: Category[] = [];
-
-  async findByName(name: string): Promise<Category> {
-    return this.categories.find((category) => category.name === name);
-  }
-
-  async list(): Promise<Category[]> {
-    return this.categories;
-  }
-
-  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    const category = new Category();
-
-    Object.assign(category, {
-      name,
-      description,
-    });
-
-    this.categories.push(category);
-  }
-}
 
 let createCategoryUseCase: CreateCategoryUseCase;
 let categoriesRepositoryInMemory: CategoriesRepositoryInMemory;
