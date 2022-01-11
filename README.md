@@ -9,7 +9,6 @@ Deve ser possível cadastrar um novo carro;
 
 **RN** => Regra de Negócio
 Não deve ser possível cadastrarum carro com uma placa já existente;
-Não deve ser possível alterar a placa de carro já cadastrado;
 O carro deve ser cadastrado como disponível por padrão;
 O usuário responsável pelo cadastro deve ser um usuário administrador.
 
