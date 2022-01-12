@@ -11,7 +11,8 @@
     "dockerRun": "docker run -p 3333:3333 rentx",
     "dockerCompose": "docker-compose up --force-recreate",
     "dockerStart": "docker-compose start",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "seed:admin": "ts-node-dev src/shared/infra/typeorm/seed/admin.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
