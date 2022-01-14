@@ -27,6 +27,12 @@ services:
       - database
     depends_on:
       - database
+    networks:
+    - ignite-network
+
+networks:
+    ignite-network:
+      driver: bridge
 
 volumes:
   pgdata:
