@@ -11,11 +11,13 @@
     "dockerRun": "docker run -p 3333:3333 rentx",
     "dockerCompose": "docker-compose up --force-recreate",
     "dockerStart": "docker-compose start",
-    "test": "jest --watchAll",
+    "test": "cross-env NODE_ENV=test jest --watchAll --runInBand --detectOpenHandles",
     "seed:admin": "ts-node-dev src/shared/infra/typeorm/seed/admin.ts"
   },
   "dependencies": {
+    "@types/supertest": "^2.0.11",
     "bcryptjs": "^2.4.3",
+    "cross-env": "^7.0.3",
     "csv-parse": "^5.0.3",
     "dayjs": "^1.10.7",
     "express": "^4.17.1",
@@ -48,6 +50,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.4.7",
     "prettier": "^2.4.1",
+    "supertest": "^6.2.1",
     "ts-jest": "^27.1.2",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.12.0",
