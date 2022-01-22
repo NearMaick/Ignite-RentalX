@@ -1,3 +1,0 @@
-describe("Devolution Rental", () => {
-  it("", () => { });
-});

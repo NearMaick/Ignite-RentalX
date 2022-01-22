@@ -59,6 +59,7 @@ export class CreateRentalUseCase {
       user_id,
       car_id,
       expected_return_date,
+      end_date: dateNow,
     });
 
     await this.carsRepository.updateAvailable(car_id, false);
