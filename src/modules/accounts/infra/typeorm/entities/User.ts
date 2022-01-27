@@ -1,4 +1,4 @@
-/* eslint-disable max-classes-per-file */
+import { Expose } from "class-transformer";
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
@@ -27,6 +27,16 @@ export class User {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @Expose({ name: "avatar_url" })
+  avatar_url(): string {
+    switch (process.env.disk) {
+      case "local":
+        return `${process.env.APP_API_URL}/avatar/${this.avatar}`;
+      default:
+        return null;
+    }
+  }
 
   constructor() {
     if (!this.id) {
