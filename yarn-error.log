@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Users\maick\AppData\Local\nvs\default\node.exe C:\Users\maick\.yarn\releases\yarn-1.22.17.cjs add @babel/typescript -D
+  C:\Users\maick\AppData\Local\nvs\default\node.exe C:\Users\maick\.yarn\releases\yarn-1.22.17.cjs add rate-limiter-flexible
 
 PATH: 
-  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\OpenJDK\openjdk-11.0.13_8\bin;;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\maick\AppData\Local\Microsoft\WindowsApps;C:\Users\maick\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\maick\AppData\Local\nvs\default;C:\Users\maick\AppData\Local\nvs\;C:\Users\maick\AppData\Local\Programs\oh-my-posh\bin;C:\Users\maick\AppData\Local\Programs\oh-my-posh\themes;C:\Users\maick\AppData\Local\Yarn\bin;C:\Android\Sdk\emulator;C:\Android\Sdk\tools;C:\Android\Sdk\tools\bin;C:\Android\Sdk\platform-tools;
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\OpenJDK\openjdk-11.0.13_8\bin;;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\ProgramData\chocolatey\lib\Elixir/bin;C:\Users\maick\AppData\Local\Microsoft\WindowsApps;C:\Users\maick\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\maick\AppData\Local\nvs\default;C:\Users\maick\AppData\Local\nvs\;C:\Users\maick\AppData\Local\Programs\oh-my-posh\bin;C:\Users\maick\AppData\Local\Programs\oh-my-posh\themes;C:\Users\maick\AppData\Local\Yarn\bin;C:\Android\Sdk\emulator;C:\Android\Sdk\tools;C:\Android\Sdk\tools\bin;C:\Android\Sdk\platform-tools
 
 Yarn version: 
   1.22.17
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@babel%2ftypescript: Not found
-      at Request.params.callback [as _callback] (C:\Users\maick\.yarn\releases\yarn-1.22.17.cjs:78557:18)
-      at Request.self.callback (C:\Users\maick\.yarn\releases\yarn-1.22.17.cjs:135288:22)
-      at Request.emit (node:events:390:28)
-      at Request.<anonymous> (C:\Users\maick\.yarn\releases\yarn-1.22.17.cjs:136260:10)
-      at Request.emit (node:events:390:28)
-      at IncomingMessage.<anonymous> (C:\Users\maick\.yarn\releases\yarn-1.22.17.cjs:136182:12)
-      at Object.onceWrapper (node:events:509:28)
-      at IncomingMessage.emit (node:events:402:35)
-      at endReadableNT (node:internal/streams/readable:1343:12)
-      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+  Error: EPERM: operation not permitted, unlink 'C:\Users\maick\rocketseat\rentx\node_modules\.bin\ts-node-dev'
 
 npm manifest: 
   {
@@ -34,6 +24,7 @@ npm manifest:
     "author": "NearMaick <maick_a_s@msn.com>",
     "license": "MIT",
     "scripts": {
+      "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
       "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --poll --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
       "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
       "dockerBuild": "docker build -t rentx .",
@@ -47,6 +38,7 @@ npm manifest:
       "@types/supertest": "^2.0.11",
       "bcryptjs": "^2.4.3",
       "class-transformer": "^0.5.1",
+      "cors": "^2.8.5",
       "cross-env": "^7.0.3",
       "csv-parse": "^5.0.3",
       "dayjs": "^1.10.7",
@@ -71,7 +63,9 @@ npm manifest:
       "@babel/plugin-proposal-class-properties": "^7.16.7",
       "@babel/plugin-proposal-decorators": "^7.16.7",
       "@babel/preset-env": "^7.16.11",
+      "@babel/preset-typescript": "^7.16.7",
       "@types/bcryptjs": "^2.4.2",
+      "@types/cors": "^2.8.12",
       "@types/express": "^4.17.13",
       "@types/jest": "^27.4.0",
       "@types/jsonwebtoken": "^8.5.6",
@@ -711,7 +705,7 @@ Lockfile:
     dependencies:
       "@babel/helper-plugin-utils" "^7.14.5"
   
-  "@babel/plugin-syntax-typescript@^7.7.2":
+  "@babel/plugin-syntax-typescript@^7.16.7", "@babel/plugin-syntax-typescript@^7.7.2":
     version "7.16.7"
     resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.16.7.tgz#39c9b55ee153151990fb038651d58d3fd03f98f8"
     integrity sha512-YhUIJHHGkqPgEcMYkPCKTyGUdoGKWtopIycQyjJH8OjvRgOYsXsaKehLVPScKJWAULPxMa4N1vCe6szREFlZ7A==
@@ -953,6 +947,15 @@ Lockfile:
     dependencies:
       "@babel/helper-plugin-utils" "^7.16.7"
   
+  "@babel/plugin-transform-typescript@^7.16.7":
+    version "7.16.8"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.16.8.tgz#591ce9b6b83504903fa9dd3652c357c2ba7a1ee0"
+    integrity sha512-bHdQ9k7YpBDO2d0NVfkj51DpQcvwIzIusJ7mEUaMlbZq3Kt/U47j24inXZHQ5MDiYpCs+oZiwnXyKedE8+q7AQ==
+    dependencies:
+      "@babel/helper-create-class-features-plugin" "^7.16.7"
+      "@babel/helper-plugin-utils" "^7.16.7"
+      "@babel/plugin-syntax-typescript" "^7.16.7"
+  
   "@babel/plugin-transform-unicode-escapes@^7.16.7":
     version "7.16.7"
     resolved "https://registry.yarnpkg.com/@babel/plugin-transform-unicode-escapes/-/plugin-transform-unicode-escapes-7.16.7.tgz#da8717de7b3287a2c6d659750c964f302b31ece3"
@@ -1058,6 +1061,15 @@ Lockfile:
       "@babel/plugin-transform-dotall-regex" "^7.4.4"
       "@babel/types" "^7.4.4"
       esutils "^2.0.2"
+  
+  "@babel/preset-typescript@^7.16.7":
+    version "7.16.7"
+    resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.16.7.tgz#ab114d68bb2020afc069cd51b37ff98a046a70b9"
+    integrity sha512-WbVEmgXdIyvzB77AQjGBEyYPZx+8tTsO50XtfozQrkW8QB2rLJpH2lgx0TRw5EJrBxOZQ+wCcyPVQvS8tjEHpQ==
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.16.7"
+      "@babel/helper-validator-option" "^7.16.7"
+      "@babel/plugin-transform-typescript" "^7.16.7"
   
   "@babel/register@^7.16.8":
     version "7.16.9"
@@ -1460,6 +1472,11 @@ Lockfile:
     version "2.1.2"
     resolved "https://registry.yarnpkg.com/@types/cookiejar/-/cookiejar-2.1.2.tgz#66ad9331f63fe8a3d3d9d8c6e3906dd10f6446e8"
     integrity sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==
+  
+  "@types/cors@^2.8.12":
+    version "2.8.12"
+    resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.12.tgz#6b2c510a7ad7039e98e7b8d3d6598f4359e5c080"
+    integrity sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==
   
   "@types/express-serve-static-core@^4.17.18":
     version "4.17.26"
@@ -2366,6 +2383,14 @@ Lockfile:
     version "1.0.3"
     resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
     integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
+  
+  cors@^2.8.5:
+    version "2.8.5"
+    resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.5.tgz#eac11da51592dd86b9f06f6e7ac293b3df875d29"
+    integrity sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
+    dependencies:
+      object-assign "^4"
+      vary "^1"
   
   create-require@^1.1.0:
     version "1.1.1"
@@ -4481,7 +4506,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"
     integrity sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==
   
-  object-assign@^4.0.1, object-assign@^4.1.1:
+  object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.1:
     version "4.1.1"
     resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
     integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
@@ -5792,7 +5817,7 @@ Lockfile:
     dependencies:
       homedir-polyfill "^1.0.1"
   
-  vary@~1.1.2:
+  vary@^1, vary@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
     integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
